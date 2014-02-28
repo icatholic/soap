@@ -1,6 +1,10 @@
 <?php
 namespace Soap;
 
+use Soap\Async;
+use Soap\SocketsRegistry;
+use Soap\Exception;
+
 class Client extends \SoapClient
 {
 
@@ -30,12 +34,7 @@ class Client extends \SoapClient
             }
         }
         
-        try {
-            $result = @parent::__call($functionName, $arguments);
-        } catch (SoapFault $e) {
-            throw new Exception(exceptionMsg($e));
-        }
-        
+        $result = @parent::__call($functionName, $arguments);
         if ($this->_asynchronous == true) {
             return $this->_asyncAction;
         }
@@ -54,14 +53,14 @@ class Client extends \SoapClient
             $result = parent::__doRequest($request, $location, $action, $version, $one_way);
             return $result;
         } else {
-            $this->_asyncAction = new SoapClientAsync($this, $this->asyncFunctionName, $request, $location, $action);
+            $this->_asyncAction = new Async($this, $this->asyncFunctionName, $request, $location, $action);
             
-            if (SoapClientSocketsRegistry::isRegistered('idbAsync'))
-                $idbAsync = SoapClientSocketsRegistry::get('idbAsync');
+            if (SocketsRegistry::isRegistered('idbAsync'))
+                $idbAsync = SocketsRegistry::get('idbAsync');
             else
                 $idbAsync = array();
             array_push($idbAsync, $this->_asyncAction);
-            SoapClientSocketsRegistry::set('idbAsync', $idbAsync);
+            SocketsRegistry::set('idbAsync', $idbAsync);
             
             return '';
         }
