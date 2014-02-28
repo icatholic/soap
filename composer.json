@@ -1,0 +1,22 @@
+{
+  "name" : "icatholic/soap",
+  "description" : "An async soap client",
+  "version" : "1.0",
+  "require" : {
+    "php" : ">=5.2.11"
+  },
+  "authors" : [ {
+    "name" : "icatholic",
+    "email" : "youngyang@icatholic.net.cn",
+    "homepage" : "http://github.com/icatholic/"
+  } ],
+  "keywords" : [ "soap", "async" ],
+  "autoload" : {
+    "psr-4" : {
+      "Weixin" : "lib/"
+    }
+  },
+  "type" : "library",
+  "license" : "BSD",
+  "homepage" : "http://github.com/icatholic/soap"
+}
