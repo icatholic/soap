@@ -13,7 +13,7 @@
   "keywords" : [ "soap", "async" ],
   "autoload" : {
     "psr-4" : {
-      "Weixin" : "lib/"
+      "Soap" : "src/"
     }
   },
   "type" : "library",
